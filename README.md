@@ -41,7 +41,7 @@ Copy the whole repository to a (local) Webserver and open index.html in a browse
 ## API Reference
 
 Currently no API Reference. But all the javascript logic lives in the files **init.js**, **drawing.js** and **layer.js**.
-They are built with the revealing module pattern.
+They are built with the Revealing Module Pattern.
 
 ## Tests
 
