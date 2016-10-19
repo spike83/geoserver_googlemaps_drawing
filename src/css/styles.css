@@ -1,3 +1,7 @@
+* {
+    font-family: 'Amatic SC', cursive;
+}
+
 html,
 body {
     height: 100%;
@@ -21,17 +25,18 @@ body {
 }
 
 .geoserver-layer {
+    font-size: 1.2em;
     top: 90px;
     left: 0;
-    height: 40px;
 }
 
 .drawing-tools {
+    display: flex;
     top: 0;
     left: 0;
-    height: 70px;
 }
 
 .drawing-title {
-    margin: 0 0 5px 0;
+    font-size: 1.5em;
+    margin: 0 15px 5px 0;
 }
