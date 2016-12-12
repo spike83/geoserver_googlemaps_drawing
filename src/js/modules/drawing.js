@@ -10,16 +10,23 @@ var measuringTools, drawingGeometry;
 * to the map.
 * @return {void}
 */
-function init() {
+function init(drawingEventHandler) {
     measuringTools = new google.maps.drawing.DrawingManager({
         drawingControl: true,
         drawingControlOptions: {
             position: google.maps.ControlPosition.TOP_LEFT,
             drawingModes: [
-                google.maps.drawing.OverlayType.RECTANGLE
+                google.maps.drawing.OverlayType.RECTANGLE,
+                google.maps.drawing.OverlayType.POLYGON
             ]
         },
         rectangleOptions: {
+            editable: true,
+            draggable: true,
+            fillColor: 'red',
+            fillOpacity: 0.3
+        },
+        polygonOptions: {
             editable: true,
             draggable: true,
             fillColor: 'red',
@@ -29,7 +36,7 @@ function init() {
     //Add the drawing tools to the map
     measuringTools.setMap(initModule.getMap());
     //Register an event listener when the drawing is finished
-    google.maps.event.addListener(measuringTools, 'overlaycomplete', handleDrawEnd);
+    google.maps.event.addListener(measuringTools, 'overlaycomplete', drawingEventHandler || handleDrawEnd);
     //The drawing tools need to go in a custom place
     replaceDrawing();
 }

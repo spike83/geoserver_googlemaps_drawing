@@ -41,7 +41,10 @@ var initModule = (function(){
         map.mapTypes.set('geour_basemap', LisagBasemap);
 
         //Load the drawing tools
-        drawingModule.init();
+        wpsModule.init();
+        drawingModule.init(wpsModule.setGeometry);
+        helperModule.init();
+
     }
 
 /*

@@ -5,22 +5,42 @@
     <meta charset="utf-8">
     <meta name="vieweport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/css/styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 </head>
 <body>
 
     <div id="map"></div>
-        <div class="drawing-tools">
-            <p class="drawing-title">Drawing Tools</p>
+        <div class="hoehenkurven-service">
+            <h3>Höhenkurven bestellen</h3>
+            <p id="helptext">Zeichnen Sie den gewünschten Ausschnitt mit den folgenden Tools</p>
+            <div class="drawing-tools"></div>
+            <form name="hoehenkurvenForm">
+                <label for="interval">Aequidistanz: </label> <select id="interval" name="interval">
+                    <option value="0.5">0.5m</option>
+                    <option value="1" selected="selected">1m</option>
+                    <option value="2">2m</option>
+                    <option value="5">5m</option>
+                    <option value="10">10m</option>
+                </select>
+                <label for="format">Format</label> <select id="format" name="format">
+                    <option value="application/dxf|hoehenkurven.dxf">DXF</option>
+                    <option value="application/zip|hoehenkurven.zip" selected="selected">Shapefile gezippt</option>
+                    <option value="application/gml|hoehenkurven.gml">GML</option>
+                    <option value="application/json|hoehenkurven.json">GeoJSON</option>
+                    <option value="application/vnd.google-earth.kml; subtype=OGR-KML|hoehenkurven.kml">Google Earth KML</option>
+                </select>
+            </form>
+            <button name="submit" type="submit" id="submit" disabled="disabled" onclick="wpsModule.startProcess(document.hoehenkurvenForm)">bestellen</button>
         </div>
         <div class="geoserver-layer">
             <input type="checkbox" id="layerbox" value="layerbox1" onclick="layerModule.toggleLayer()"> <label for="layerbox">Geoserver Layer</label>
         </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7-WJVPe9LPLsuQ3RUJ0qUVYvQ-AhwMXE&libraries=drawing&callback=initModule.initMap" async defer></script>
-<script src="src/js/modules/init.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvbtjiEIMs0XeJW6R-T-6-DTjsiwzTAR8&libraries=drawing&callback=initModule.initMap" async defer></script>
+<script src="src/js/modules/wps.js"></script>
 <script src="src/js/modules/drawing.js"></script>
 <script src="src/js/modules/layer.js"></script>
+<script src="src/js/helper/google-polygon-extension.js"></script>
+<script src="src/js/modules/init.js"></script>
 <script src="src/js/jquery-3.1.1.min.js"></script>
 </body>
 </html>

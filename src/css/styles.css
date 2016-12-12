@@ -14,7 +14,7 @@ body {
 }
 
 .geoserver-layer,
-.drawing-tools {
+.hoehenkurven-service {
     color: white;
     padding: 10px;
     z-index: 2;
@@ -22,11 +22,13 @@ body {
     position: absolute;
     width: 200px;
     background: rgba(0,0,0, 0.8);
+    top: 0;
+    left: 0;
 }
 
 .geoserver-layer {
     font-size: 1.2em;
-    top: 90px;
+    top: 350px;
     left: 0;
 }
 
