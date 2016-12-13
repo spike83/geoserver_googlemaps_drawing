@@ -1,4 +1,12 @@
 var wpsModule = (function() {
+
+    var WPS_ERROR_CONDITION = {
+        AREA_TOO_BIG: 1,
+        WPS_ERROR: 2,
+        BLOB_ERROR: 4,
+        HTTP_ERROR: 8
+    };
+
     /**
      * the wkt string to pass into the wps xml.
      */
@@ -10,10 +18,24 @@ var wpsModule = (function() {
     var geom;
 
     /**
-     * WPS initializing function.
+     * successCb is a callback function which is called when the wps process ends successful
      */
-    function init(){
-        // nothing to do at the moment.
+    var successCb = function () { }; // default function
+
+    /**
+     * errorCb is a callback function which is called when the wps process fails
+     */
+    var errorCb = function () { }; // default function
+
+    /**
+     * WPS initializing function.
+     * @param successCallback the drawing event
+     * @param errorCallback the drawing event. The function should take 3 parameters (Code from WPS_ERROR_CONDITION,
+     * error number, error message
+     * */
+    function init(successCallback, errorCallback){
+        successCb = successCallback;
+        errorCb = errorCallback;
     }
 
 
@@ -22,6 +44,11 @@ var wpsModule = (function() {
      * @param event the drawing event
      */
     function setGeometry(event){
+        // remove the geometry if there is one
+        if(geom){
+            geom.setMap(null);
+        }
+
         if(event.type == google.maps.drawing.OverlayType.RECTANGLE){
             wkt = event.overlay.ToWKT();
         }
@@ -79,6 +106,7 @@ var wpsModule = (function() {
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
+                    successCb();
                 });
             } else { // to handle other than 200 response codes
                 errorCodeSent(this.status, this.response);
@@ -139,22 +167,22 @@ var wpsModule = (function() {
     }
 
     function errorAreaToBig(){
-        alert("area is too big for our processing server");
+        errorCb(WPS_ERROR_CONDITION.AREA_TOO_BIG);  // area is too big for our processing server
         cleanup();
     }
 
     function errorOnProcessingServer(errorMessage){
-        alert("error on processing server \n" + errorMessage);
+        errorCb(WPS_ERROR_CONDITION.WPS_ERROR , null,  errorMessage);
         cleanup();
     }
 
     function errorBlobNotCorrect(){
-        alert("blob not correct");
+        errorCb(WPS_ERROR_CONDITION.BLOB_ERROR); // blob not correct
         cleanup();
     }
 
     function errorCodeSent(errorCode, response){
-        alert('Höhenkurven können nicht geladen werden! ' + errorCode +" " + response);
+        errorCb(WPS_ERROR_CONDITION.HTTP_ERROR, errorCode, response);
         cleanup();
     }
 
@@ -287,6 +315,7 @@ var wpsModule = (function() {
     return {
         init:init,
         setGeometry: setGeometry,
-        startProcess: startProcess
+        startProcess: startProcess,
+        WPS_ERROR_CONDITION: WPS_ERROR_CONDITION
     }
 })();

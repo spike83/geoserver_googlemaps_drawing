@@ -41,10 +41,32 @@ var initModule = (function(){
         map.mapTypes.set('geour_basemap', LisagBasemap);
 
         //Load the drawing tools
-        wpsModule.init();
+        wpsModule.init(wpsSuccessCallback, wpsErrorCallback);
         drawingModule.init(wpsModule.setGeometry);
         helperModule.init();
 
+    }
+
+    function wpsErrorCallback(flag, code, message) {
+        var message= "Fehler bei Höhenkurven Export!\n";
+        switch (flag){
+            case wpsModule.WPS_ERROR_CONDITION.HTTP_ERROR:
+                message += "HTTP ERROR mit Coce: " + code;
+                break;
+            case wpsModule.WPS_ERROR_CONDITION.WPS_ERROR:
+                message += "Prozessierfehler: \n" + message;
+                break;
+            case wpsModule.WPS_ERROR_CONDITION.AREA_TOO_BIG:
+                message += "Fläche zu gross. Bitte wenden Sie sich an die Lisag.";
+                break;
+            default:
+                message += "Ein technischer Fehler ist aufgetreten.";
+        }
+        alert(message);
+    }
+
+    function wpsSuccessCallback() {
+        alert("Höhenkurven wurden fertiggestellt und heruntergeladen. Sie finden die Datei in Ihren Downloads!")
     }
 
 /*
