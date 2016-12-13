@@ -52,18 +52,7 @@ var helperModule = (function() {
             google.maps.Polygon.prototype.BoundsArea = function()
             {
                 var bounds = this.getBounds();
-                var nord = (bounds.getNorthEast()).lat();
-                var ost = (bounds.getNorthEast()).lng();
-                var sud = (bounds.getSouthWest()).lat();
-                var west = (bounds.getSouthWest()).lng();
-
-                return google.maps.geometry.spherical.computeArea([
-                    new google.maps.LatLng(ost, nord),
-                    new google.maps.LatLng(ost, sud),
-                    new google.maps.LatLng(west, sud),
-                    new google.maps.LatLng(west, nord),
-                    new google.maps.LatLng(ost, nord)
-                ]);
+                return getBoundsArea(bounds);
             };
         }
 
@@ -92,19 +81,26 @@ var helperModule = (function() {
             google.maps.Rectangle.prototype.BoundsArea = function()
             {
                 var bounds = this.getBounds();
-                var nord = (bounds.getNorthEast()).lat();
-                var ost = (bounds.getNorthEast()).lng();
-                var sud = (bounds.getSouthWest()).lat();
-                var west = (bounds.getSouthWest()).lng();
-
-                return google.maps.geometry.spherical.computeArea([
-                    new google.maps.LatLng(ost, nord),
-                    new google.maps.LatLng(ost, sud),
-                    new google.maps.LatLng(west, sud),
-                    new google.maps.LatLng(west, nord),
-                    new google.maps.LatLng(ost, nord)
-                ]);
+                return getBoundsArea(bounds);
             };
+        }
+        /**
+         * calculates the area of bounds
+         * @param bounds
+         */
+        function getBoundsArea(bounds){
+            var nord = (bounds.getNorthEast()).lat();
+            var ost = (bounds.getNorthEast()).lng();
+            var sud = (bounds.getSouthWest()).lat();
+            var west = (bounds.getSouthWest()).lng();
+
+            return google.maps.geometry.spherical.computeArea([
+                new google.maps.LatLng(ost, nord),
+                new google.maps.LatLng(ost, sud),
+                new google.maps.LatLng(west, sud),
+                new google.maps.LatLng(west, nord),
+                new google.maps.LatLng(ost, nord)
+            ]);
         }
     }
     return {
