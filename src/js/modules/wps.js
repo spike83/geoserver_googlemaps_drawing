@@ -90,7 +90,7 @@ var wpsModule = (function() {
         var xhr = new XMLHttpRequest();
 
         // todo: wps server address should be extracted to some config place
-        xhr.open('POST', 'https://geoserver.karten-werk.ch/demo/wps', true);
+        xhr.open('POST', 'https://wps.karten-werk.ch/wps', true);
         xhr.responseType = 'blob';
         xhr.setRequestHeader('Content-type', 'application/xml; charset=utf-8');
         xhr.onload = function(e) { // this function is called with feedback from server
